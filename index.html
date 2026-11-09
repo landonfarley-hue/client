@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Your Home Timeline | Landon Farley Real Estate Client Portal</title>
+<meta name="description" content="Follow every step of buying or selling your home with Landon Farley, Keller Williams Sioux Falls. See milestones, showing feedback and open house results, and get an alert each time something is done.">
+<meta name="theme-color" content="#FFFFFF">
+<link rel="canonical" href="https://yourhometimeline.com/">
+<meta property="og:url" content="https://yourhometimeline.com/">
+<meta property="og:site_name" content="Your Home Timeline">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Your Home Timeline | Landon Farley Real Estate">
+<meta property="og:description" content="Your private client portal: follow every step of your home sale or purchase.">
+<meta property="og:image" content="https://yourhometimeline.com/images/hero.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/theme.css?v=1">
+<link rel="stylesheet" href="assets/portal.css?v=1">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="demo-banner" data-demo hidden>Preview mode: sample clients and homes, saved only in this browser. <button type="button" data-reset>Reset sample data</button></div>
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="index.html" aria-label="Your Home Timeline, home"><img class="brand-logo" src="images/logo-dark.png" alt="Matthew Fisher Homes logo" width="120" height="62"><span class="brand-text"><b>YOUR HOME TIMELINE</b><span>Landon Farley Real Estate</span></span></a>
+    <button class="menu-btn" aria-expanded="false" aria-controls="nav">MENU</button>
+    <nav aria-label="Main"><ul class="nav" id="nav">
+      <li><a href="#how">How It Works</a></li>
+      <li><a href="https://discoversiouxfallshomes.com/" rel="noopener">Main Site</a></li>
+      <li class="phone"><a href="tel:+16052513116">(605) 251-3116</a></li>
+      <li><a href="#signin" class="cta">Client Sign In</a></li>
+    </ul></nav>
+  </div>
+</header>
+<main id="main">
+<section class="hero" id="signin">
+  <div class="hero-img" role="img" aria-label="Falls Park in Sioux Falls at sunset"></div>
+  <div class="signin-card">
+    <span class="eyebrow">Client portal</span>
+    <h1 style="margin-top:10px">Your Home<br>Timeline</h1>
+    <span class="sub">with Landon Farley</span>
+    <div class="divider"><i></i></div>
+    <p class="lede" style="margin:0 auto">Follow every step of your sale or purchase, from first meeting to keys in hand.</p>
+
+    <form id="signin-form" novalidate>
+      <label for="email">Your email address</label>
+      <input id="email" name="email" type="email" autocomplete="email" required placeholder="you@example.com">
+      <button class="btn" type="submit">Email Me a Sign-In Link</button>
+      <p class="small">No password needed. We&rsquo;ll email you a secure link. Use the email address you gave Landon.</p>
+      <div class="form-status" role="alert" aria-live="assertive"></div>
+    </form>
+    <div class="signin-sent" id="sent" hidden>
+      <b>Check your inbox.</b><br>We sent a sign-in link to <span data-sent-to></span>. Open it on this device to see your timeline. It can take a minute; check spam if you don&rsquo;t see it.
+    </div>
+
+    <div data-demo hidden style="margin-top:26px;text-align:left">
+      <span class="eyebrow">Preview the portal</span>
+      <div class="demo-picks">
+        <a class="btn ghost" href="portal.html?t=demo-seller" data-as="seller@example.com">As a Seller</a>
+        <a class="btn ghost" href="portal.html?t=demo-buyer" data-as="buyer@example.com">As a Buyer</a>
+        <a class="btn ghost" href="agent.html" data-as="agent@demo">As Landon</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="how">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">How it works</span>
+      <h2 style="margin-top:12px">Always know where things stand</h2>
+      <div class="divider"><i></i></div>
+      <p>Buying or selling a home has a lot of moving parts. Your timeline keeps all of it in one place, updated as things happen.</p>
+    </div>
+    <div class="quick">
+      <div class="qtile"><svg width="44" height="44" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 22 24 6l19 16"/><path d="M10 19v23h28V19"/><path d="M20 42V30h8v12"/></svg><b>Your Home</b><span>Photos, price and status of the home you&rsquo;re selling or buying.</span></div>
+      <div class="qtile"><svg width="44" height="44" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"/><path d="m9.5 12 2 2 3.5-4"/><circle cx="12" cy="36" r="5"/><path d="M12 17v14M22 12h18M22 36h18M22 24h12"/></svg><b>Every Step</b><span>Each milestone gets checked off the moment it&rsquo;s done.</span></div>
+      <div class="qtile"><svg width="44" height="44" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 10h36v24H20l-9 8v-8H6z"/><path d="M14 19h20M14 26h12"/></svg><b>Real Feedback</b><span>Sellers see showing feedback and open house results as they come in.</span></div>
+      <div class="qtile"><svg width="44" height="44" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M24 6a12 12 0 0 0-12 12v8l-4 7h32l-4-7v-8A12 12 0 0 0 24 6z"/><path d="M19 37a5 5 0 0 0 10 0"/></svg><b>Instant Alerts</b><span>An email each time something is done, so you never have to ask.</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-band">
+  <div class="wrap center">
+    <span class="eyebrow">Not a client yet?</span>
+    <h2 style="margin-top:12px">Thinking about buying or selling?</h2>
+    <div class="divider"><i></i></div>
+    <p>Every client gets their own timeline from day one. Let&rsquo;s talk about your plans.</p>
+    <div class="btn-row" style="justify-content:center;margin-top:24px">
+      <a class="btn" href="https://discoversiouxfallshomes.com/lets-talk.html">Let&rsquo;s Talk</a>
+      <a class="btn ghost" href="tel:+16052513116">Call (605) 251-3116</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="foot">
+      <div>
+        <a class="brand" href="index.html"><img class="brand-logo" src="images/logo-light.png" alt="Matthew Fisher Homes logo" width="120" height="62"><span class="brand-text"><b>LANDON FARLEY</b><span>Real Estate</span></span></a>
+        <p style="margin-top:16px;max-width:36ch">Your Home Timeline is the private client portal for Landon Farley Real Estate, Keller Williams Sioux Falls.</p>
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="#signin">Client Sign In</a></li>
+          <li><a href="https://discoversiouxfallshomes.com/">DiscoverSiouxFallsHomes.com</a></li>
+          <li><a href="https://discoversiouxfallshomes.com/listings.html">Homes for Sale</a></li>
+          <li><a href="https://discoversiouxfallshomes.com/home-value.html">Home Value</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="tel:+16052513116">(605) 251-3116</a></li>
+          <li><a href="mailto:LandonFarley@kw.com">LandonFarley@kw.com</a></li>
+          <li>SD License #21614</li>
+        </ul>
+      </div>
+    </div>
+    <p class="legal">&copy; <span id="year">2026</span> Landon Farley Real Estate &middot; Keller Williams Sioux Falls. Each office is independently owned and operated. Equal Housing Opportunity.</p>
+  </div>
+</footer>
+
+<script src="assets/config.js?v=1"></script>
+<script src="assets/app.js?v=1"></script>
+<script>
+(function(){
+  var f=document.getElementById("signin-form"), st=f.querySelector(".form-status");
+  if(YHT.mode==="demo"){
+    document.querySelectorAll("[data-demo]").forEach(function(e){e.hidden=false});
+    document.querySelectorAll("[data-as]").forEach(function(a){a.addEventListener("click",function(){YHT.signIn(a.getAttribute("data-as"))})});
+    document.querySelector("[data-reset]").addEventListener("click",function(){YHT.reset();YHT.toast("Sample data reset.")});
+  } else {
+    YHT.user().then(function(u){ if(u) YHT.isAgent().then(function(a){ location.replace(a?"agent.html":"portal.html") }) }).catch(function(){});
+  }
+  f.addEventListener("submit",function(e){
+    e.preventDefault();
+    var email=f.email.value.trim();
+    st.className="form-status"; st.textContent="";
+    if(!/.+@.+\..+/.test(email)){ st.className="form-status err"; st.textContent="Please enter a valid email address."; f.email.focus(); return; }
+    var b=f.querySelector("button"); b.disabled=true; b.textContent="Sending…";
+    YHT.signIn(email).then(function(r){
+      if(r&&r.demoRedirect){ YHT.isAgent().then(function(a){ location.href=a?"agent.html":"portal.html" }); return; }
+      f.hidden=true; var s=document.getElementById("sent"); s.querySelector("[data-sent-to]").textContent=email; s.hidden=false;
+    }).catch(function(err){
+      b.disabled=false; b.textContent="Email Me a Sign-In Link";
+      st.className="form-status err"; st.textContent=(err&&err.message)||"Something went wrong. Please try again.";
+    });
+  });
+})();
+</script>
+</body>
+</html>

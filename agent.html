@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Agent Dashboard | Your Home Timeline</title>
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#FFFFFF">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/theme.css?v=1">
+<link rel="stylesheet" href="assets/portal.css?v=1">
+<style>@media(max-width:700px){body{padding-bottom:0}}</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="demo-banner" data-demo hidden>Preview mode: changes are saved only in this browser, and alerts show as pop-ups instead of emails. <button type="button" data-reset>Reset sample data</button></div>
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="agent.html" aria-label="Agent dashboard"><img class="brand-logo" src="images/logo-dark.png" alt="Matthew Fisher Homes logo" width="120" height="62"><span class="brand-text"><b>YOUR HOME TIMELINE</b><span>Agent Dashboard</span></span></a>
+    <button class="menu-btn" aria-expanded="false" aria-controls="nav">MENU</button>
+    <nav aria-label="Main"><ul class="nav" id="nav">
+      <li><a href="agent.html">Clients</a></li>
+      <li><a href="https://discoversiouxfallshomes.com/" rel="noopener">Main Site</a></li>
+      <li><button type="button" class="linkish" data-signout>Sign Out</button></li>
+    </ul></nav>
+  </div>
+</header>
+<main id="main" class="wrap">
+  <div class="loading" id="loading">Loading&hellip;</div>
+  <div id="gate" class="gate" hidden></div>
+  <div class="admin" id="admin" hidden>
+    <aside class="side-list" aria-label="Clients">
+      <h2>Clients</h2>
+      <label for="q" class="sr" style="position:absolute;left:-9999px">Search clients</label>
+      <input id="q" type="search" placeholder="Search name or address">
+      <ul class="tx-list" id="tx-list"></ul>
+      <button class="btn" type="button" id="new-btn">+ New Client</button>
+    </aside>
+    <div id="pane"></div>
+  </div>
+</main>
+<script src="assets/config.js?v=1"></script>
+<script src="assets/app.js?v=1"></script>
+<script src="assets/agent.js?v=1"></script>
+</body>
+</html>

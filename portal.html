@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>My Timeline | Your Home Timeline</title>
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#FFFFFF">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/theme.css?v=1">
+<link rel="stylesheet" href="assets/portal.css?v=1">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="demo-banner" data-demo hidden>Preview mode with sample data. <a href="agent.html" data-as-agent>Open Landon&rsquo;s dashboard</a> in another tab, check something off, and watch this page update.</div>
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="portal.html" aria-label="Your Home Timeline"><img class="brand-logo" src="images/logo-dark.png" alt="Matthew Fisher Homes logo" width="120" height="62"><span class="brand-text"><b>YOUR HOME TIMELINE</b><span>Landon Farley Real Estate</span></span></a>
+    <button class="menu-btn" aria-expanded="false" aria-controls="nav">MENU</button>
+    <nav aria-label="Main"><ul class="nav" id="nav">
+      <li><a href="#timeline">Timeline</a></li>
+      <li data-seller-only><a href="#feedback">Feedback</a></li>
+      <li><a href="#updates">Updates</a></li>
+      <li data-agent-only hidden><a href="agent.html">Dashboard</a></li>
+      <li class="phone"><a href="tel:+16052513116">(605) 251-3116</a></li>
+      <li><button type="button" class="linkish" data-signout>Sign Out</button></li>
+    </ul></nav>
+  </div>
+</header>
+
+<main id="main">
+  <div class="loading" id="loading">Loading your timeline&hellip;</div>
+  <div id="app" hidden></div>
+</main>
+
+<nav class="m-bar" aria-label="Contact Landon">
+  <a href="tel:+16052513116">Call</a><a href="sms:+16052513116">Text</a><a href="mailto:LandonFarley@kw.com">Email</a>
+</nav>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p class="legal" style="margin-top:0;border:0;padding-top:0">&copy; <span id="year">2026</span> Landon Farley Real Estate &middot; Keller Williams Sioux Falls &middot; SD License #21614. Each office is independently owned and operated. Equal Housing Opportunity.</p>
+  </div>
+</footer>
+
+<script src="assets/config.js?v=1"></script>
+<script src="assets/app.js?v=1"></script>
+<script src="assets/portal.js?v=1"></script>
+</body>
+</html>
