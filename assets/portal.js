@@ -9,8 +9,6 @@
 
   if (Y.mode === "demo") {
     document.querySelectorAll("[data-demo]").forEach(function (e) { e.hidden = false; });
-    var aa = document.querySelector("[data-as-agent]");
-    if (aa) aa.target = "_blank";
   }
   document.querySelector("[data-signout]").addEventListener("click", function () {
     Y.signOut().then(function () { location.href = "index.html"; });

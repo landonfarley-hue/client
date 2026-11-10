@@ -16,7 +16,7 @@ Same look as discoversiouxfallshomes.com (`assets/theme.css` is copied from that
 
 ## Right now: preview mode
 
-Until the backend is connected, the site runs in **preview mode** with two sample clients saved only in your browser. Open the site and use the "Preview the portal" buttons (As a Seller, As a Buyer, As Landon). Alerts show as pop-ups instead of emails.
+Until the backend is connected, the site runs in **preview mode** with two made-up sample clients saved only in the visitor's browser. Use the "Preview the portal" buttons (As a Seller, As a Buyer). The agent dashboard is locked in preview mode and only opens for emails on the agent list once Supabase is connected.
 
 ## Going live (about 30 minutes, one time)
 
@@ -56,7 +56,8 @@ Then in this repo: **Settings → Pages**, confirm the custom domain is `yourhom
    - `FROM_EMAIL` = `Landon Farley <updates@yourhometimeline.com>`
    - `SITE_URL` = `https://yourhometimeline.com`
    - `WEBHOOK_SECRET` = any long random password
-   - `AGENT_EMAIL` = `landonfarley@kw.com` (optional: you get a copy of every alert)
+   - `AGENT_EMAIL` = `landonfarley@kw.com` (you get a confirmation email each time a portal is opened or a client is invited)
+   - `AGENT_COPY_ALL` = `true` (optional: also get a copy of every alert sent to clients)
 5. **Database → Webhooks → Create**: table `events`, event **Insert**, type **Supabase Edge Function** → `notify`, and add an HTTP header `x-webhook-secret` with the same value as `WEBHOOK_SECRET`.
 
 Sign-in links are sent by Supabase's built-in mailer, which is rate-limited. For real use, go to **Authentication → SMTP Settings** and enter Resend's SMTP details (host `smtp.resend.com`, port 465, user `resend`, password = your Resend API key, sender `updates@yourhometimeline.com`).
@@ -64,9 +65,17 @@ Sign-in links are sent by Supabase's built-in mailer, which is rate-limited. For
 ### 4. Text-message alerts (optional)
 Add Twilio secrets `TWILIO_SID`, `TWILIO_TOKEN`, `TWILIO_FROM` to the Edge Function. Clients with a mobile number saved under "Home & Client" will also get a text. US numbers need A2P 10DLC registration with Twilio first.
 
+## Security checklist
+- Clients sign in with a one-time link emailed to them, so they need access to that inbox. The database only returns homes whose client email list includes the signed-in email.
+- Only emails in the `agents` table can open the dashboard or change anything.
+- Protect `landonfarley@kw.com` with a strong password and two-step verification: whoever controls that inbox can sign in as the agent.
+- Supabase → **Authentication → Providers → Email**: lower "Email OTP Expiration" to 900 seconds (15 minutes) so sign-in links expire quickly.
+- Never put the Supabase **service_role** key in this repo.
+
 ## Daily use
 1. Go to yourhometimeline.com → sign in with landonfarley@kw.com → you land on the Agent Dashboard.
-2. **+ New Client**: choose seller or buyer, enter their name, email and the home. They get a welcome email with a link.
+2. **+ New Client**: choose seller or buyer, enter their name, email and the home. They get an invite email explaining how to sign in, and you get a confirmation email.
+   Adding an email to an existing client later sends an invite to just that new address.
 3. Click a circle to check off a step → the client gets an alert.
 4. Sellers: add **Showing Feedback** and **Open House** recaps → alert sent.
 5. **Post Update** for anything else (inspection scheduled, price change).

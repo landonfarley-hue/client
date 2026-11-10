@@ -171,10 +171,8 @@
       return Promise.resolve({ demoRedirect: true });
     },
     signOut: function () { try { localStorage.removeItem("yht-demo-user"); } catch (e) {} return Promise.resolve(); },
-    isAgent: function () {
-      return Demo.user().then(function (u) { return !!u && (u.email === String(CFG.AGENT.email).toLowerCase() || u.email === "agent@demo"); });
-    },
-    canManage: function () { return Promise.resolve(true); /* preview: anyone can try the dashboard */
+    isAgent: function () { return Promise.resolve(false); },
+    canManage: function () { return Promise.resolve(false); /* the dashboard only works once Supabase sign-in is connected */
     },
     listTransactions: function () {
       return Demo.user().then(function (u) {

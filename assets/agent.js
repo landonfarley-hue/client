@@ -13,10 +13,6 @@
     del: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M5 7h14M10 7V4h4v3M7 7l1 13h8l1-13"/></svg>'
   };
 
-  if (Y.mode === "demo") {
-    document.querySelectorAll("[data-demo]").forEach(function (e) { e.hidden = false; });
-    $("[data-reset]").addEventListener("click", function () { Y.reset(); location.reload(); });
-  }
   $("[data-signout]").addEventListener("click", function () { Y.signOut().then(function () { location.href = "index.html"; }); });
   $("#q").addEventListener("input", function (e) { state.filter = e.target.value.toLowerCase(); renderList(); });
   $("#new-btn").addEventListener("click", function () { state.current = null; renderList(); renderNew(); });
@@ -24,8 +20,11 @@
   function err(e) { Y.toast("<b>Couldn&rsquo;t save.</b> " + esc((e && e.message) || "Please try again."), "err"); console.error(e); }
 
   function boot() {
-    var start = Y.mode === "demo" ? Y.signIn("agent@demo") : Promise.resolve();
-    start.then(Y.user).then(function (u) {
+    if (Y.mode === "demo") {
+      $("#loading").hidden = true;
+      return gate('<span class="eyebrow">Agent dashboard</span><h1 style="margin-top:12px;font-size:2rem">Not available yet</h1><div class="divider"><i></i></div><p>The agent dashboard turns on once the site is connected to Supabase. After that, only emails on the agent list can open it.</p><p style="margin-top:20px"><a class="btn" href="index.html">Back to home</a></p>');
+    }
+    Y.user().then(function (u) {
       $("#loading").hidden = true;
       if (!u) return gate('<span class="eyebrow">Agent dashboard</span><h1 style="margin-top:12px;font-size:2rem">Please sign in</h1><div class="divider"><i></i></div><p>Sign in with your agent email to manage client timelines.</p><p style="margin-top:20px"><a class="btn" href="index.html#signin">Sign In</a></p>');
       return Y.canManage().then(function (ok) {
@@ -256,7 +255,11 @@
     f.addEventListener("submit", function (e) {
       e.preventDefault(); var data = readForm(f);
       if (!data.client_name) { Y.toast("Client name is required.", "err"); return; }
-      Y.updateTransaction(tx.id, data).then(function () { Y.toast("Saved."); return reload(); }).catch(err);
+      var added = data.client_emails.filter(function (e) { return (tx.client_emails || []).indexOf(e) === -1; });
+      Y.updateTransaction(tx.id, data).then(function () {
+        Y.toast(added.length && tx.alerts_enabled ? "<b>Saved.</b> Portal invite sent to " + esc(added.join(", ")) + "." : "Saved.");
+        return reload();
+      }).catch(err);
     });
     $("#del-tx").addEventListener("click", function () {
       if (!confirmDelete(tx.client_name + "'s timeline, including all steps, feedback and open houses,")) return;
@@ -274,7 +277,7 @@
       if (!data.client_name) { Y.toast("Client name is required.", "err"); return; }
       var btn = f.querySelector("button[type=submit]"); btn.disabled = true;
       Y.createTransaction(data).then(function (tx) {
-        if (Y.mode === "live") Y.toast(data.client_emails.length ? "<b>Timeline created.</b> Welcome email sent." : "<b>Timeline created.</b> Add a client email to invite them.");
+        if (Y.mode === "live") Y.toast(data.client_emails.length ? "<b>Portal created.</b> Invite sent to " + esc(data.client_emails.join(", ")) + ". You'll get a confirmation email." : "<b>Portal created.</b> Add a client email to send the invite.");
         state.tab = "timeline"; return refreshList().then(function () { return select(tx.id); });
       }).catch(function (e) { btn.disabled = false; err(e); });
     });

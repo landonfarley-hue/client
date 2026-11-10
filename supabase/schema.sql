@@ -99,9 +99,11 @@ create table if not exists public.events (
   kind text not null default 'note' check (kind in ('welcome','step','feedback','open_house','note')),
   title text not null,
   body text not null default '',
+  recipients text[],            -- null = all clients on the home; set = only these emails (used for invites)
   notified_at timestamptz,
   created_at timestamptz not null default now()
 );
+alter table public.events add column if not exists recipients text[];
 create index if not exists events_tx on public.events(transaction_id, created_at desc);
 
 -- ---------- row-level security ----------
@@ -167,6 +169,7 @@ drop trigger if exists ev_on_open_house on public.open_houses;
 create trigger ev_on_open_house after insert on public.open_houses
   for each row execute function public.ev_on_open_house();
 
+-- New portal: welcome/invite email to every client email, plus a confirmation to the agent
 create or replace function public.ev_on_tx() returns trigger
 language plpgsql security definer set search_path = public as $$
 begin
@@ -178,6 +181,24 @@ end $$;
 drop trigger if exists ev_on_tx on public.transactions;
 create trigger ev_on_tx after insert on public.transactions
   for each row execute function public.ev_on_tx();
+
+-- Email added to an existing client later: invite only the new address(es)
+create or replace function public.ev_on_tx_emails() returns trigger
+language plpgsql security definer set search_path = public as $$
+declare added text[];
+begin
+  select coalesce(array_agg(e), '{}') into added
+    from unnest(new.client_emails) e where not (e = any (old.client_emails));
+  if array_length(added, 1) > 0 then
+    insert into public.events (transaction_id, kind, title, body, recipients)
+    values (new.id, 'welcome', 'Your home timeline is ready',
+            'Follow every step of your ' || case when new.side = 'seller' then 'sale' else 'purchase' end || ' here.', added);
+  end if;
+  return new;
+end $$;
+drop trigger if exists ev_on_tx_emails on public.transactions;
+create trigger ev_on_tx_emails after update of client_emails on public.transactions
+  for each row execute function public.ev_on_tx_emails();
 
 -- ---------- step helpers used by the agent dashboard ----------
 create or replace function public.insert_step(p_transaction uuid, p_title text, p_description text, p_after int)
