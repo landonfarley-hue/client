@@ -6,7 +6,7 @@
 //   RESEND_API_KEY   required for email
 //   FROM_EMAIL       e.g.  Landon Farley <updates@yourhometimeline.com>
 //   SITE_URL         https://yourhometimeline.com
-//   WEBHOOK_SECRET   any long random string; also set as the x-webhook-secret header on the webhook
+//   WEBHOOK_SECRET   optional extra lock: if set, the webhook must send it in an x-webhook-secret header
 //   AGENT_EMAIL      gets a confirmation email each time a portal is opened or a client is invited
 //   AGENT_COPY_ALL   optional: "true" to also BCC the agent on every client alert
 //   TWILIO_SID / TWILIO_TOKEN / TWILIO_FROM   optional: text-message alerts
@@ -87,12 +87,22 @@ Deno.serve(async (req) => {
     return new Response("unauthorized", { status: 401 });
   }
   const payload = await req.json().catch(() => null);
-  const ev = payload?.record;
-  if (!ev?.transaction_id) return new Response("no record", { status: 400 });
+  const eventId = payload?.record?.id;
+  if (typeof eventId !== "string" || !/^[0-9a-f-]{36}$/i.test(eventId)) return new Response("no record", { status: 400 });
 
   let secret = env("SUPABASE_SERVICE_ROLE_KEY");
   try { secret = JSON.parse(env("SUPABASE_SECRET_KEYS") || "{}").default || secret; } catch { /* fall back to legacy key */ }
   const db = createClient(env("SUPABASE_URL"), secret);
+
+  // Never trust what the caller sent: re-load the event from the database, and claim it
+  // (notified_at null -> now) in one step so each event can only ever be emailed once.
+  const { data: claimed } = await db.from("events")
+    .update({ notified_at: new Date().toISOString() })
+    .eq("id", eventId).is("notified_at", null)
+    .select("*");
+  const ev = claimed?.[0];
+  if (!ev) return new Response("already handled or not found");
+
   const { data: tx } = await db.from("transactions").select("*").eq("id", ev.transaction_id).single();
   if (!tx) return new Response("skipped");
   const to: string[] = ev.recipients?.length ? ev.recipients : (tx.client_emails ?? []);
@@ -107,7 +117,6 @@ Deno.serve(async (req) => {
     });
   }
   if (!tx.alerts_enabled) {
-    await db.from("events").update({ notified_at: new Date().toISOString() }).eq("id", ev.id);
     return new Response(JSON.stringify(results), { headers: { "Content-Type": "application/json" } });
   }
 
@@ -141,6 +150,5 @@ Deno.serve(async (req) => {
     );
   }
 
-  await db.from("events").update({ notified_at: new Date().toISOString() }).eq("id", ev.id);
   return new Response(JSON.stringify(results), { headers: { "Content-Type": "application/json" } });
 });
