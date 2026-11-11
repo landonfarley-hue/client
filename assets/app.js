@@ -5,7 +5,9 @@
 (function () {
   "use strict";
   var CFG = window.YHT_CONFIG || {};
-  var LIVE = !!(CFG.SUPABASE_URL && CFG.SUPABASE_ANON_KEY);
+  var KEY = CFG.SUPABASE_PUBLISHABLE_KEY || CFG.SUPABASE_ANON_KEY || "";
+  if (/^sb_secret_/.test(KEY)) { KEY = ""; console.error("A Supabase SECRET key was put in config.js. It has been ignored. Use the publishable key and rotate the secret key."); }
+  var LIVE = !!(CFG.SUPABASE_URL && KEY);
 
   /* ---------------- step templates ---------------- */
   var TEMPLATES = {
@@ -287,10 +289,10 @@
   function sb() {
     if (sbP) return sbP;
     sbP = new Promise(function (res, rej) {
-      if (window.supabase && window.supabase.createClient) return res(window.supabase.createClient(CFG.SUPABASE_URL, CFG.SUPABASE_ANON_KEY));
+      if (window.supabase && window.supabase.createClient) return res(window.supabase.createClient(CFG.SUPABASE_URL, KEY));
       var s = document.createElement("script");
       s.src = "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js";
-      s.onload = function () { res(window.supabase.createClient(CFG.SUPABASE_URL, CFG.SUPABASE_ANON_KEY)); };
+      s.onload = function () { res(window.supabase.createClient(CFG.SUPABASE_URL, KEY)); };
       s.onerror = function () { rej(new Error("Could not load the sign-in library. Check your connection and refresh.")); };
       document.head.appendChild(s);
     });

@@ -1,9 +1,10 @@
 /* Your Home Timeline — connection settings.
    Leave SUPABASE_URL blank to run the site in DEMO mode (sample data saved in this browser only).
-   After setting up Supabase (see README.md), paste your Project URL and anon public key here. */
+   After setting up Supabase (see README.md), paste your Project URL and your PUBLISHABLE key (starts with sb_publishable_) here.
+   The publishable key is meant to be public. NEVER put a secret key (sb_secret_...) or service_role key in this file. */
 window.YHT_CONFIG = {
   SUPABASE_URL: "",
-  SUPABASE_ANON_KEY: "",
+  SUPABASE_PUBLISHABLE_KEY: "",
   SITE_URL: "https://yourhometimeline.com",
   AGENT: {
     name: "Landon Farley",

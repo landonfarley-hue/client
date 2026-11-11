@@ -90,7 +90,9 @@ Deno.serve(async (req) => {
   const ev = payload?.record;
   if (!ev?.transaction_id) return new Response("no record", { status: 400 });
 
-  const db = createClient(env("SUPABASE_URL"), env("SUPABASE_SERVICE_ROLE_KEY"));
+  let secret = env("SUPABASE_SERVICE_ROLE_KEY");
+  try { secret = JSON.parse(env("SUPABASE_SECRET_KEYS") || "{}").default || secret; } catch { /* fall back to legacy key */ }
+  const db = createClient(env("SUPABASE_URL"), secret);
   const { data: tx } = await db.from("transactions").select("*").eq("id", ev.transaction_id).single();
   if (!tx) return new Response("skipped");
   const to: string[] = ev.recipients?.length ? ev.recipients : (tx.client_emails ?? []);

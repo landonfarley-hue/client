@@ -40,12 +40,12 @@ Then in this repo: **Settings → Pages**, confirm the custom domain is `yourhom
 2. **SQL Editor → New query**, paste all of `supabase/schema.sql`, click **Run**. This creates the tables, the security rules (each client sees only their own home), the alert triggers and the photo storage. It adds `landonfarley@kw.com` as the agent; add teammates the same way:
    `insert into agents (email) values ('teammate@kw.com');`
 3. **Authentication → URL Configuration**: Site URL `https://yourhometimeline.com`, and add `https://yourhometimeline.com/portal.html` under Redirect URLs.
-4. **Project Settings → API**: copy the **Project URL** and the **anon public** key into `assets/config.js`:
+4. **Project Settings → API Keys**: copy the **Project URL** and the **publishable** key (`sb_publishable_...`) into `assets/config.js`:
    ```js
    SUPABASE_URL: "https://xxxx.supabase.co",
-   SUPABASE_ANON_KEY: "eyJ...",
+   SUPABASE_PUBLISHABLE_KEY: "sb_publishable_...",
    ```
-   (The anon key is meant to be public. The security rules in the database are what protect client data. Never put the *service_role* key in this repo.)
+   (The publishable key is meant to be public. The security rules in the database are what protect client data. Never put a *secret* key in this repo.)
 
 ### 3. Email alerts (Resend)
 1. Sign up at resend.com → **Domains → Add domain** `yourhometimeline.com` and add the DNS records it shows you.
@@ -70,7 +70,7 @@ Add Twilio secrets `TWILIO_SID`, `TWILIO_TOKEN`, `TWILIO_FROM` to the Edge Funct
 - Only emails in the `agents` table can open the dashboard or change anything.
 - Protect `landonfarley@kw.com` with a strong password and two-step verification: whoever controls that inbox can sign in as the agent.
 - Supabase → **Authentication → Providers → Email**: lower "Email OTP Expiration" to 900 seconds (15 minutes) so sign-in links expire quickly.
-- Never put the Supabase **service_role** key in this repo.
+- Never put a Supabase **secret** key (`sb_secret_...`) or legacy **service_role** key in this repo.
 
 ## Daily use
 1. Go to yourhometimeline.com → sign in with landonfarley@kw.com → you land on the Agent Dashboard.
