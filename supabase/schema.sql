@@ -133,6 +133,13 @@ begin
   end loop;
 end $$;
 
+-- ---------- who may use the Data API at all ----------
+-- Signed-out visitors (anon) get nothing. Signed-in users get table access, still filtered row by row by the policies above.
+revoke all on public.agents, public.transactions, public.steps, public.feedback, public.open_houses, public.events from anon, public;
+grant select on public.agents to authenticated;
+grant select, insert, update, delete on public.transactions, public.steps, public.feedback, public.open_houses, public.events to authenticated;
+grant all on public.agents, public.transactions, public.steps, public.feedback, public.open_houses, public.events to service_role;
+
 -- ---------- automatic activity + alerts ----------
 create or replace function public.ev_on_step() returns trigger
 language plpgsql security definer set search_path = public as $$
@@ -236,3 +243,10 @@ create policy "agents upload photos" on storage.objects for insert to authentica
 drop policy if exists "agents manage photos" on storage.objects;
 create policy "agents manage photos" on storage.objects for update to authenticated
   using (bucket_id = 'home-photos' and public.is_agent());
+
+-- ---------- function permissions ----------
+revoke execute on all functions in schema public from anon, public;
+grant execute on function public.is_agent() to authenticated, service_role;
+grant execute on function public.can_view(uuid) to authenticated, service_role;
+grant execute on function public.insert_step(uuid, text, text, int) to authenticated, service_role;
+grant execute on function public.move_step(uuid, int) to authenticated, service_role;
