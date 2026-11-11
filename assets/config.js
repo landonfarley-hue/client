@@ -3,8 +3,8 @@
    After setting up Supabase (see README.md), paste your Project URL and your PUBLISHABLE key (starts with sb_publishable_) here.
    The publishable key is meant to be public. NEVER put a secret key (sb_secret_...) or service_role key in this file. */
 window.YHT_CONFIG = {
-  SUPABASE_URL: "",
-  SUPABASE_PUBLISHABLE_KEY: "",
+  SUPABASE_URL: "https://ugrbmpvtyixowqxwylou.supabase.co",
+  SUPABASE_PUBLISHABLE_KEY: "sb_publishable_0TRU-_4rWB9VzANqFIdqjQ__HNdz1_n",
   SITE_URL: "https://yourhometimeline.com",
   AGENT: {
     name: "Landon Farley",
