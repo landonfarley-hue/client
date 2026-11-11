@@ -50,15 +50,14 @@ Then in this repo: **Settings → Pages**, confirm the custom domain is `yourhom
 ### 3. Email alerts (Resend)
 1. Sign up at resend.com → **Domains → Add domain** `yourhometimeline.com` and add the DNS records it shows you.
 2. **API Keys → Create** and copy the key.
-3. In Supabase: **Edge Functions → Deploy a new function → via editor**, name it `notify`, paste `supabase/functions/notify/index.ts`, and turn **off** "Verify JWT". Deploy.
+3. In Supabase: **Edge Functions → Deploy a new function → via editor**, name it `notify`, paste `supabase/functions/notify/index.ts`, deploy, then in its **Settings** turn **off** "Verify JWT". (The function protects itself: it ignores what the caller sends, reloads the event from the database and only emails events that haven't been sent yet, exactly once.)
 4. **Edge Functions → Secrets**, add:
-   - `RESEND_API_KEY` = your Resend key
+   - `RESEND_API_KEY` = your Resend key (paste it yourself; never put it in this repo)
    - `FROM_EMAIL` = `Landon Farley <updates@yourhometimeline.com>`
    - `SITE_URL` = `https://yourhometimeline.com`
-   - `WEBHOOK_SECRET` = any long random password
    - `AGENT_EMAIL` = `landonfarley@kw.com` (you get a confirmation email each time a portal is opened or a client is invited)
    - `AGENT_COPY_ALL` = `true` (optional: also get a copy of every alert sent to clients)
-5. **Database → Webhooks → Create**: table `events`, event **Insert**, type **Supabase Edge Function** → `notify`, and add an HTTP header `x-webhook-secret` with the same value as `WEBHOOK_SECRET`.
+5. **Integrations → Database Webhooks → Install integration**, then run `supabase/alerts-trigger.sql` in the SQL Editor.
 
 Sign-in links are sent by Supabase's built-in mailer, which is rate-limited. For real use, go to **Authentication → SMTP Settings** and enter Resend's SMTP details (host `smtp.resend.com`, port 465, user `resend`, password = your Resend API key, sender `updates@yourhometimeline.com`).
 
